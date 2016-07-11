@@ -37,18 +37,17 @@ public class ProfilingDemo {
     private static final Logger LOG = LoggerFactory.getLogger(ProfilingDemo.class);
 
     public static void main(String[] args) throws IOException {
-        LOG.info("Configuration demo started");
+        LOG.info("Profiling demo started");
 
         // we need folder to save properties in it. In other case we can't create more then one KaaClient
         if (!Files.exists(Paths.get(KaaManager.PROPERTIES_OUT_DIR))) {
-            LOG.error("No resource folder. Configuration demo cancelled");
+            LOG.error("No resource folder. Profiling demo cancelled");
             return;
         }
 
         KaaManager manager = new KaaManager();
         for (int i = 0; i < KaaManager.KAA_CLIENT_NUMBER; i++) {
             try {
-                createResDir(i);
                 manager.startKaaClient(i);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -64,13 +63,12 @@ public class ProfilingDemo {
 
         // Stop the Kaa client and release all the resources which were in use.
         try {
-            deleteResDir();
             manager.stopKaaClients();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        LOG.info("Configuration demo stopped");
+        LOG.info("Profiling demo stopped");
     }
 
     private static void createResDir(int index) throws IOException {

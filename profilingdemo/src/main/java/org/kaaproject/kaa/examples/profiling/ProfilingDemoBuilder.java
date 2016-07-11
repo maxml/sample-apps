@@ -53,15 +53,14 @@ public class ProfilingDemoBuilder extends AbstractDemoBuilder {
 
         ApplicationDto profilingApplication = new ApplicationDto();
         profilingApplication.setName("Endpoint profiling demo");
-        profilingApplication.setCredentialsServiceName("Internal");
+        profilingApplication.setCredentialsServiceName("Trustful");
         profilingApplication = client.editApplication(profilingApplication);
 
 
         sdkProfileDto.setApplicationId(profilingApplication.getId());
         sdkProfileDto.setApplicationToken(profilingApplication.getApplicationToken());
-        sdkProfileDto.setNotificationSchemaVersion(1);
-        sdkProfileDto.setProfileSchemaVersion(0);
-        sdkProfileDto.setLogSchemaVersion(1);
+        sdkProfileDto.setNotificationSchemaVersion(0);
+        sdkProfileDto.setLogSchemaVersion(0);
 
         loginTenantDeveloper(client);
 
