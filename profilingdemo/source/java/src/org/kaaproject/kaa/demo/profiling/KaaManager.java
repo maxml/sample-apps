@@ -40,7 +40,11 @@ import java.util.ArrayList;
  */
 public class KaaManager {
 
-    public static final int KAA_CLIENT_NUMBER = 9;
+    public static final int KAA_CLIENT_NUMBER = 8;
+
+    /**
+     * In this dir all Kaa clients creates it's keys for starting
+     */
     public static final String PROPERTIES_OUT_DIR = "res/out/";
     public static final String KAA_PROPERTIES_DIR_PREFIX = "kaaTempDir";
 

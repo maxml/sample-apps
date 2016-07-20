@@ -40,7 +40,6 @@ public class PagerProfileData {
         profiles.add(new InnerData(false, true, false));
         profiles.add(new InnerData(false, false, true));
         profiles.add(new InnerData(false, false, false));
-        profiles.add(new InnerData(true, true, true));
 
         return profiles;
     }

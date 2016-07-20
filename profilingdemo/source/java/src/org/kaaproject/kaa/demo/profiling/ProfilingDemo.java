@@ -39,12 +39,6 @@ public class ProfilingDemo {
     public static void main(String[] args) throws IOException {
         LOG.info("Profiling demo started");
 
-        // we need folder to save properties in it. In other case we can't create more then one KaaClient
-        if (!Files.exists(Paths.get(KaaManager.PROPERTIES_OUT_DIR))) {
-            LOG.error("No resource folder. Profiling demo cancelled");
-            return;
-        }
-
         KaaManager manager = new KaaManager();
         for (int i = 0; i < KaaManager.KAA_CLIENT_NUMBER; i++) {
             try {
