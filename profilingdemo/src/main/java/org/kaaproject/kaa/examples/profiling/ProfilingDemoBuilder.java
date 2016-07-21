@@ -59,8 +59,8 @@ public class ProfilingDemoBuilder extends AbstractDemoBuilder {
 
         sdkProfileDto.setApplicationId(profilingApplication.getId());
         sdkProfileDto.setApplicationToken(profilingApplication.getApplicationToken());
-        sdkProfileDto.setNotificationSchemaVersion(0);
-        sdkProfileDto.setLogSchemaVersion(0);
+        sdkProfileDto.setNotificationSchemaVersion(1);
+        sdkProfileDto.setLogSchemaVersion(1);
 
         loginTenantDeveloper(client);
 

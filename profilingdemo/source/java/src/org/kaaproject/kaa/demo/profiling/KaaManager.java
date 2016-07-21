@@ -45,8 +45,7 @@ public class KaaManager {
     /**
      * In this dir all Kaa clients creates it's keys for starting
      */
-    public static final String PROPERTIES_OUT_DIR = "res/out/";
-    public static final String KAA_PROPERTIES_DIR_PREFIX = "kaaTempDir";
+    public static final String PROPERTIES_OUT_KEYS_DIR = "./res/out/kaaTempDir";
 
     private static final Logger LOG = LoggerFactory.getLogger(KaaManager.class);
 
@@ -55,7 +54,7 @@ public class KaaManager {
     public void startKaaClient(final int index) throws IOException {
 
         KaaClientProperties kaaClientProperties = new KaaClientProperties();
-        kaaClientProperties.setWorkingDirectory(KaaManager.PROPERTIES_OUT_DIR + KaaManager.KAA_PROPERTIES_DIR_PREFIX + index);
+        kaaClientProperties.setWorkingDirectory(KaaManager.PROPERTIES_OUT_KEYS_DIR + index);
 
         // Create the Kaa desktop context for the application.
         DesktopKaaPlatformContext desktopKaaPlatformContext = new DesktopKaaPlatformContext(kaaClientProperties);
@@ -69,7 +68,7 @@ public class KaaManager {
 
                 displayConfiguration(index);
             }
-        });
+        }, true);
         kaaClients.add(kaaClient);
 
         kaaClient.setProfileContainer(new ProfileContainer() {

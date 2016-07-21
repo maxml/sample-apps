@@ -20,12 +20,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 
 /**
  * A demo application class that use the Kaa endpoint profiling and grouping API.
@@ -64,29 +58,4 @@ public class ProfilingDemo {
 
         LOG.info("Profiling demo stopped");
     }
-
-    private static void createResDir(int index) throws IOException {
-        Path path = Paths.get(KaaManager.PROPERTIES_OUT_DIR + KaaManager.KAA_PROPERTIES_DIR_PREFIX + index);
-        Files.createDirectory(path);
-    }
-
-    private static void deleteResDir() throws IOException {
-        final Path directory = Paths.get(KaaManager.PROPERTIES_OUT_DIR);
-        Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                Files.delete(file);
-                return FileVisitResult.CONTINUE;
-            }
-
-            @Override
-            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                if (dir != directory)
-                    Files.delete(dir);
-                return FileVisitResult.CONTINUE;
-            }
-
-        });
-    }
-
 }
