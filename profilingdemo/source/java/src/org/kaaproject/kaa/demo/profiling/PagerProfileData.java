@@ -14,12 +14,14 @@
  *  limitations under the License.
  */
 
-package org.kaaproject.kaa.demo.activation;
+package org.kaaproject.kaa.demo.profiling;
 
 import java.util.ArrayList;
 
 /**
  * Class for storing test data and showing all functionality
+ *
+ * @author Maksym Liashenko
  */
 public class PagerProfileData {
 

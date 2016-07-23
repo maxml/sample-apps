@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package org.kaaproject.kaa.demo.activation;
+package org.kaaproject.kaa.demo.profiling;
 
 import org.kaaproject.examples.pager.PagerClientProfile;
 import org.kaaproject.examples.pager.PagerConfiguration;
@@ -33,8 +33,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Class that shows Kaa activation API, works with endpoints and it's profiles
+ * Class that shows Kaa profiling API, works with endpoints and it's profiles
  *
+ * @author Maksym Liashenko
  * @see <a href="http://docs.kaaproject.org/display/KAA/Endpoint+profiling">Profiling API</a>
  */
 public class KaaManager {
@@ -55,7 +56,7 @@ public class KaaManager {
         // Create the Kaa desktop context for the application.
         DesktopKaaPlatformContext desktopKaaPlatformContext = new DesktopKaaPlatformContext(kaaClientProperties);
 
-        // Create a Kaa client and add a listener which displays the Kaa client activation
+        // Create a Kaa client and add a listener which displays the Kaa client profiling
         // as soon as the Kaa client is started.
         final KaaClient kaaClient = Kaa.newClient(desktopKaaPlatformContext, new SimpleKaaClientStateListener() {
             @Override
@@ -81,10 +82,10 @@ public class KaaManager {
             }
         });
 
-        // Persist activation in a local storage to avoid downloading it each time the Kaa client is started.
+        // Persist profiling in a local storage to avoid downloading it each time the Kaa client is started.
         kaaClient.setConfigurationStorage(new SimpleConfigurationStorage(desktopKaaPlatformContext, "saved_config.cfg"));
 
-        // Add a listener which displays the Kaa client activation each time it is updated.
+        // Add a listener which displays the Kaa client profiling each time it is updated.
         kaaClient.addConfigurationListener(new ConfigurationListener() {
             @Override
             public void onConfigurationUpdate(PagerConfiguration configuration) {
@@ -121,7 +122,7 @@ public class KaaManager {
 
             LOG.info("KeyHash - " + kaaClient.getEndpointKeyHash());
 
-            LOG.info(index + "-th activation body (have vibro-, audio-, video-support):");
+            LOG.info(index + "-th profiling body (have vibro-, audio-, video-support):");
             LOG.info("{} - {} - {}", isVibroSupport, isAudioSupport, isVideoSupport);
         } else {
             LOG.info("Kaa Client is null!");

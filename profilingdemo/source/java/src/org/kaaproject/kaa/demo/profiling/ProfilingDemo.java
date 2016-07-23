@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package org.kaaproject.kaa.demo.activation;
+package org.kaaproject.kaa.demo.profiling;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,11 +28,13 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 /**
- * A demo application class that use the Kaa activation API.
+ * A demo application class that use the Kaa endpoint profiling and grouping API.
+ *
+ * @author Maksym Liashenko
  */
-public class Main {
+public class ProfilingDemo {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Main.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ProfilingDemo.class);
 
     public static void main(String[] args) throws IOException {
         LOG.info("Configuration demo started");
