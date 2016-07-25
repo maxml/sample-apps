@@ -76,6 +76,8 @@ public class ProfilingDemoBuilder extends AbstractDemoBuilder {
         // Profile schema
         CTLSchemaDto endpointProfileCtlSchema = client.saveCTLSchemaWithAppToken(getResourceAsString("endpoint_profile_schema.avsc"),
                 profilingApplication.getTenantId(), profilingApplication.getApplicationToken());
+        CTLSchemaDto configurationCTLSchema = saveCTLSchemaWithAppToken(client, "configuration-schema.avsc",
+                profilingApplication);
 
         EndpointProfileSchemaDto endpointProfileSchema = new EndpointProfileSchemaDto();
         endpointProfileSchema.setApplicationId(profilingApplication.getId());
@@ -85,24 +87,38 @@ public class ProfilingDemoBuilder extends AbstractDemoBuilder {
         endpointProfileSchema = client.saveProfileSchema(endpointProfileSchema);
         sdkProfileDto.setProfileSchemaVersion(endpointProfileSchema.getVersion());
 
-        // Configuration
+        // Configuration schema
         ConfigurationSchemaDto configurationSchema = new ConfigurationSchemaDto();
         configurationSchema.setApplicationId(profilingApplication.getId());
         configurationSchema.setName("Endpoint profiling configuration schema");
-        configurationSchema.setDescription("Configuration schema describing active and inactive devices used by city guide application");
-        configurationSchema = client.createConfigurationSchema(configurationSchema, getResourcePath("configuration-schema.avsc"));
-        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
+        configurationSchema.setDescription("Configuration schema describing profiling application profile");
+        configurationSchema.setCtlSchemaId(configurationCTLSchema.getId());
+        configurationSchema = client.saveConfigurationSchema(configurationSchema);
 
+        logger.info("Configuration schema version: {}", configurationSchema.getVersion());
+        sdkProfileDto.setConfigurationSchemaVersion(configurationSchema.getVersion());
+        logger.info("Configuration schema was created.");
+
+        // Configuration
         ConfigurationDto baseConfiguration = new ConfigurationDto();
         baseConfiguration.setApplicationId(profilingApplication.getId());
         baseConfiguration.setEndpointGroupId(baseEndpointGroup.getId());
         baseConfiguration.setSchemaId(configurationSchema.getId());
         baseConfiguration.setSchemaVersion(configurationSchema.getVersion());
         baseConfiguration.setDescription("Base endpoint profiling configuration");
-        baseConfiguration.setBody(FileUtils.readResource(getResourcePath("configuration_devices.json")));
+
+        String body = FileUtils.readResource(getResourcePath("configuration_devices.json"));
+        logger.info("Configuration body: [{}]", body);
+        baseConfiguration.setBody(body);
         baseConfiguration.setStatus(UpdateStatus.INACTIVE);
+
+        logger.info("Editing the configuration...");
         baseConfiguration = client.editConfiguration(baseConfiguration);
+        logger.info("Configuration was successfully edited");
+
+        logger.info("Activating the configuration");
         client.activateConfiguration(baseConfiguration.getId());
+        logger.info("Configuration was activated");
 
         logger.info("Finished loading 'Endpoint profiling demo application' data...");
     }
