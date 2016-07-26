@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "625037689306",
+    "project_id": "kaa-user-verifier-1fe50"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625037689306:android:189dedd62a20847b",
+        "android_client_info": {
+          "package_name": "org.kaaproject.kaa.demo.verifiersdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "625037689306-rkg5vnhum0hcjlhoi7f778g769a796ea.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.kaaproject.kaa.demo.verifiersdemo",
+            "certificate_hash": "38954094A62FDD610B0FD36204C2AF12398A531A"
+          }
+        },
+        {
+          "client_id": "625037689306-hr1349t05er2qu47pd7no4itek3f20sk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGnPCKXA8WpCBSd-XtuEKAj4pWn3EuUfw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -101,6 +101,36 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <configuration>
+                    <useDefaultExcludes>true</useDefaultExcludes>
+                    <excludes>
+                        <!--Android files-->
+                        <exclude>source/gradlew</exclude>
+                        <exclude>source/build.gradle</exclude>
+                        <exclude>source/settings.gradle</exclude>
+                        <exclude>source/gradlew.bat</exclude>
+                        <exclude>source/app/gradlew</exclude>
+                        <exclude>source/app/build.gradle</exclude>
+                        <exclude>source/app/gradlew.bat</exclude>
+                        <exclude>source/app/proguard-rules.pro</exclude>
+                        <exclude>source/app/google-services.json</exclude>
+                        <exclude>source/app/local.properties</exclude>
+                        <exclude>source/app/fabric.properties</exclude>
+                        <exclude>source/app/gradle/wrapper/gradle-wrapper.properties</exclude>
+                        <exclude>source/app/app.iml</exclude>
+                        <exclude>source/gradle/wrapper/gradle-wrapper.properties</exclude>
+                        <exclude>source/UserVerifiers.iml</exclude>
+                        <exclude>source/gradle.properties</exclude>
+                        <exclude>source/source.iml</exclude>
+                        <!--Common files-->
+                        <exclude>resources/verifiersDemoEventClassFamily.json</exclude>
+                        <exclude>resources/config_schema.avsc</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
