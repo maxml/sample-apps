@@ -1,7 +1,7 @@
 {
-  "audioSupportEnabled" : false,
-  "vibroSupportEnabled" : false,
-  "videoSupportEnabled" : false,
+  "audioSubscriptionActive" : false,
+  "vibroSubscriptionActive" : false,
+  "videoSubscriptionActive" : false,
   "__uuid": null
 }
 
