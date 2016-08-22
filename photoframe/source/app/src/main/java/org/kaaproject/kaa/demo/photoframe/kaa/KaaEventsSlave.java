@@ -173,7 +173,7 @@ public class KaaEventsSlave implements PhotoFrameEventClassFamily.Listener {
      */
     @Override
     public void onEvent(AlbumListRequest albumListRequest, String sourceEndpoint) {
-        List<AlbumInfo> albums = new ArrayList<>(infoSlave.getAlbumsMap().values());
+        List<AlbumInfo> albums = new ArrayList<>(infoSlave.updateAlbumsMap().values());
         AlbumListResponse albumListResponse = new AlbumListResponse();
         albumListResponse.setAlbumList(albums);
         mPhotoFrameEventClassFamily.sendEvent(albumListResponse, sourceEndpoint);
