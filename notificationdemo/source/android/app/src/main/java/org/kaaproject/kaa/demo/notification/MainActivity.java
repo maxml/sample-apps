@@ -95,10 +95,10 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-
+    protected void onDestroy() {
+        super.onDestroy();
         manager.onTerminate();
+        kaaTask.cancel(true);
     }
 
     @Override
@@ -151,7 +151,7 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
 
                 TopicFragment topicFragment = (TopicFragment) getSupportFragmentManager().findFragmentByTag(NotificationConstants.TOPIC_FRAGMENT_TAG);
                 if (topicFragment != null && topicFragment.isVisible()) {
-                    ((OnFragmentUpdateEvent) topicFragment).onRefresh();
+                    topicFragment.onRefresh();
                 }
             }
         };

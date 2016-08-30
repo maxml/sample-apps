@@ -16,14 +16,6 @@
 
 package org.kaaproject.kaa.demo.notification.fragment;
 
-import org.kaaproject.kaa.demo.notification.R;
-import org.kaaproject.kaa.demo.notification.MainActivity;
-import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
-import org.kaaproject.kaa.demo.notification.kaa.KaaManager;
-import org.kaaproject.kaa.demo.notification.storage.TopicStorage;
-import org.kaaproject.kaa.demo.notification.adapter.TopicAdapter;
-import org.kaaproject.kaa.demo.notification.util.TopicHelper;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -34,7 +26,14 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.Collections;
+import org.kaaproject.kaa.demo.notification.MainActivity;
+import org.kaaproject.kaa.demo.notification.R;
+import org.kaaproject.kaa.demo.notification.adapter.TopicAdapter;
+import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
+import org.kaaproject.kaa.demo.notification.kaa.KaaManager;
+import org.kaaproject.kaa.demo.notification.storage.TopicStorage;
+import org.kaaproject.kaa.demo.notification.util.TopicHelper;
+
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -67,7 +66,6 @@ public class TopicFragment extends ListFragment implements OnFragmentUpdateEvent
 
         timer = new Timer(true);
         timer.schedule(new TimerTask() {
-
             @Override
             public void run() {
                 getActivity().runOnUiThread(new Runnable() {
