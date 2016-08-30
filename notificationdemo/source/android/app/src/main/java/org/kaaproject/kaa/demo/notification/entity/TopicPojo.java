@@ -33,14 +33,17 @@ public class TopicPojo {
      * Topic identifier
      */
     private long topicId;
+
     /**
      * Object from server, after we get it
      */
     private Topic serverTopic;
+
     /**
      * List aff all get obtained notification of this topic
      */
     private LinkedList<SecurityAlert> notifications;
+
     /**
      * Check, if user select this topic. Not interesting, if topic is mandatory
      *
@@ -89,7 +92,7 @@ public class TopicPojo {
     /**
      * Tip: you can delete all notifications. You must get them all back.
      *
-     * @param selected
+     * @param selected if true - topic was selected, either - just skip it
      */
     public void setSelected(boolean selected) {
         this.selected = selected;

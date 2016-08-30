@@ -23,6 +23,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 
 import org.kaaproject.kaa.client.notification.NotificationListener;
 import org.kaaproject.kaa.client.notification.NotificationTopicListListener;
@@ -53,36 +55,19 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
     private KaaManager manager;
     private NotificationListener notificationListener;
     private NotificationTopicListListener topicListener;
+    private ProgressBar progressBar;
+    private FrameLayout container;
 
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_main);
 
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        container = (FrameLayout) findViewById(R.id.container);
+
         kaaTask.execute();
         permitPolicy();
-    }
-
-    private void permitPolicy() {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-    }
-
-    public KaaManager getManager() {
-        return manager;
-    }
-
-    @Override
-    public void onTopicClicked(int position) {
-        showNotificationsFragment(position);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        //  Notify the application of the background state.
-        manager.onPause();
     }
 
     @Override
@@ -95,6 +80,14 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+        //  Notify the application of the background state.
+        manager.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         manager.onTerminate();
@@ -104,12 +97,26 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().findFragmentByTag(NotificationConstants.NOTIFICATION_FRAGMENT_TAG) != null) {
-            showProgress();
+            setVisibilityToProgress(true);
             showTopicsFragment();
-            hideProgress();
+            setVisibilityToProgress(false);
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onTopicClicked(int position) {
+        showNotificationsFragment(position);
+    }
+
+    private void permitPolicy() {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+    }
+
+    public KaaManager getManager() {
+        return manager;
     }
 
     private void initNotificationListener() {
@@ -182,14 +189,24 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
                 NotificationConstants.TOPIC_FRAGMENT_TAG).commit();
     }
 
-    private void showProgress() {
-        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
-        findViewById(R.id.container).setVisibility(View.GONE);
-    }
+//    private void showProgress() {
+//        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+//        findViewById(R.id.container).setVisibility(View.GONE);
+//    }
 
     private void hideProgress() {
-        findViewById(R.id.progressBar).setVisibility(View.GONE);
+        findViewById(R.id.progress_bar).setVisibility(View.GONE);
         findViewById(R.id.container).setVisibility(View.VISIBLE);
+    }
+
+    private void setVisibilityToProgress(boolean visibility) {
+        if(visibility) {
+            progressBar.setVisibility(View.VISIBLE);
+            container.setVisibility(View.GONE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            container.setVisibility(View.VISIBLE);
+        }
     }
 
     // Tip: you can use it from Service

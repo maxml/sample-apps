@@ -16,8 +16,6 @@
 
 package org.kaaproject.kaa.demo.notification.adapter;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -30,6 +28,8 @@ import android.widget.TextView;
 
 import org.kaaproject.kaa.demo.notification.R;
 import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
+
+import java.util.List;
 
 
 /**
@@ -73,7 +73,6 @@ public class TopicAdapter extends ArrayAdapter<TopicPojo> {
         viewHolder.checkbox.setChecked(model.isMandatoryTopic() ? true : model.isSelected());
 
         viewHolder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 TopicPojo element = getItem(position);
@@ -88,7 +87,6 @@ public class TopicAdapter extends ArrayAdapter<TopicPojo> {
 
                 viewHolder.notificationCount.setText(element.getNotificationsCount() != 0 ? "" + element.getNotificationsCount() : "");
             }
-
         });
 
         if (model.isMandatoryTopic()) {
