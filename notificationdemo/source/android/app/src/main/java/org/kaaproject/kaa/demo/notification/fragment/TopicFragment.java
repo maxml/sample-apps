@@ -105,7 +105,7 @@ public class TopicFragment extends ListFragment implements OnFragmentUpdateEvent
     public void onSubscribe(long topicId) {
         ((MainActivity) getActivity()).getManager().subscribeTopic(topicId);
 
-        TopicStorage.get().subsccribe(topicId).save(getActivity());
+        TopicStorage.get().subscribe(topicId).save(getActivity());
 
         updateAdapter();
     }
@@ -114,7 +114,7 @@ public class TopicFragment extends ListFragment implements OnFragmentUpdateEvent
     public void onUnsubscribe(long topicId) {
         ((MainActivity) getActivity()).getManager().unsubscribeTopic(topicId);
 
-        TopicStorage.get().unsubsccribe(topicId).save(getActivity());
+        TopicStorage.get().unsubscribe(topicId).save(getActivity());
 
         updateAdapter();
     }

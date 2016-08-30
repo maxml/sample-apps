@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class TopicHelper {
 
-    public static TopicPojo get(List<TopicPojo> topics, long topicId) {
+    private static TopicPojo get(List<TopicPojo> topics, long topicId) {
         for (TopicPojo t : topics) {
             if (topicId == t.getTopicId())
                 return t;

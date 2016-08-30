@@ -110,10 +110,43 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
         showNotificationsFragment(position);
     }
 
-    private void permitPolicy() {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-    }
+    // Tip: you can use it from Service
+    private AsyncTask<Void, Void, Void> kaaTask = new AsyncTask<Void, Void, Void>() {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            setVisibilityToProgress(true);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            // Initialize a notification listener and add it to the Kaa client.
+            initNotificationListener();
+
+            // Initialize a topicList listener and add it to the Kaa client.
+            initTopicListener();
+
+            manager = new KaaManager(MainActivity.this);
+            manager.start(notificationListener, topicListener);
+
+            List<TopicPojo> buff = TopicHelper.sync(TopicStorage.get().getTopics(), manager.getTopics());
+
+            TopicStorage.get()
+                    .setTopics(buff)
+                    .save(MainActivity.this);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            setVisibilityToProgress(false);
+            showTopicsFragment();
+        }
+    };
 
     public KaaManager getManager() {
         return manager;
@@ -148,6 +181,13 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
         return getSupportFragmentManager().findFragmentById(R.id.container).getTag();
     }
 
+    private void showNotificationDialog(long topicId, SecurityAlert notification) {
+
+        NotificationDialogFragment dialog = NotificationDialogFragment.newInstance(TopicHelper.getTopicName(TopicStorage.get().getTopics(), topicId),
+                notification.getAlertMessage(), null);
+        dialog.show(getSupportFragmentManager(), "fragment_alert");
+    }
+
     private void initTopicListener() {
         topicListener = new NotificationTopicListListener() {
             public void onListUpdated(List<Topic> topics) {
@@ -164,11 +204,9 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
         };
     }
 
-    private void showNotificationDialog(long topicId, SecurityAlert notification) {
-
-        NotificationDialogFragment dialog = NotificationDialogFragment.newInstance(TopicHelper.getTopicName(TopicStorage.get().getTopics(), topicId),
-                notification.getAlertMessage(), null);
-        dialog.show(getSupportFragmentManager(), "fragment_alert");
+    private void permitPolicy() {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
     private void showNotificationsFragment(int position) {
@@ -189,16 +227,6 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
                 NotificationConstants.TOPIC_FRAGMENT_TAG).commit();
     }
 
-//    private void showProgress() {
-//        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
-//        findViewById(R.id.container).setVisibility(View.GONE);
-//    }
-
-    private void hideProgress() {
-        findViewById(R.id.progress_bar).setVisibility(View.GONE);
-        findViewById(R.id.container).setVisibility(View.VISIBLE);
-    }
-
     private void setVisibilityToProgress(boolean visibility) {
         if(visibility) {
             progressBar.setVisibility(View.VISIBLE);
@@ -208,36 +236,5 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
             container.setVisibility(View.VISIBLE);
         }
     }
-
-    // Tip: you can use it from Service
-    private AsyncTask<Void, Void, Void> kaaTask = new AsyncTask<Void, Void, Void>() {
-        @Override
-        protected Void doInBackground(Void... params) {
-            // Initialize a notification listener and add it to the Kaa client.
-            initNotificationListener();
-
-            // Initialize a topicList listener and add it to the Kaa client.
-            initTopicListener();
-
-            manager = new KaaManager(MainActivity.this);
-            manager.start(notificationListener, topicListener);
-
-            List<TopicPojo> buff = TopicHelper.sync(TopicStorage.get().getTopics(), manager.getTopics());
-
-            TopicStorage.get()
-                    .setTopics(buff)
-                    .save(MainActivity.this);
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            hideProgress();
-            showTopicsFragment();
-        }
-    };
 
 }

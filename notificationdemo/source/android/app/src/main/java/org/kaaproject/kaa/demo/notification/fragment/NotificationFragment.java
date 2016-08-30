@@ -39,10 +39,6 @@ import java.util.List;
  */
 public class NotificationFragment extends ListFragment implements OnFragmentUpdateEvent {
 
-    public NotificationFragment() {
-        super();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

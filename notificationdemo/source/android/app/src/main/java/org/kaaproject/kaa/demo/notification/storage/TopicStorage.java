@@ -59,7 +59,7 @@ public class TopicStorage {
         return instance;
     }
 
-    public TopicStorage subsccribe(long topicId) {
+    public TopicStorage subscribe(long topicId) {
         for (TopicPojo t : topics) {
             if (t.getTopicId() == topicId) {
                 t.setSelected(true);
@@ -68,7 +68,7 @@ public class TopicStorage {
         return this;
     }
 
-    public TopicStorage unsubsccribe(long topicId) {
+    public TopicStorage unsubscribe(long topicId) {
         for (TopicPojo t : topics) {
             if (t.getTopicId() == topicId) {
                 t.setSelected(false);
