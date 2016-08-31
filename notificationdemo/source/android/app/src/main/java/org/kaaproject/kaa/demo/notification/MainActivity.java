@@ -47,7 +47,7 @@ import java.util.List;
  * Use multithreading for starting Kaa client
  * Init Notification and Topic listener, which can get information from server
  * Manage all views.
- *
+ * <p>
  * Tip: you can use Service with this AsyncTask and send all Kaa Notification in mobile notification area
  */
 public class MainActivity extends FragmentActivity implements TopicFragment.OnTopicClickedListener {
@@ -63,6 +63,8 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_main);
 
+        manager = new KaaManager(MainActivity.this);
+
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         container = (FrameLayout) findViewById(R.id.container);
 
@@ -74,32 +76,31 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
     protected void onResume() {
         super.onResume();
 
-        // Notify the application of the foreground state.
-        if (manager != null)
-            manager.onResume();
+//         Notify the application of the foreground state.
+        manager.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        //  Notify the application of the background state.
+//        Notify the application of the background state.
         manager.onPause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        manager.onTerminate();
+        manager.onStop();
         kaaTask.cancel(true);
     }
 
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().findFragmentByTag(NotificationConstants.NOTIFICATION_FRAGMENT_TAG) != null) {
-            setVisibilityToProgress(true);
+            showProgressBar(true);
             showTopicsFragment();
-            setVisibilityToProgress(false);
+            showProgressBar(false);
         } else {
             super.onBackPressed();
         }
@@ -110,24 +111,23 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
         showNotificationsFragment(position);
     }
 
-    // Tip: you can use it from Service
+//         Tip: you can use it from Service
     private AsyncTask<Void, Void, Void> kaaTask = new AsyncTask<Void, Void, Void>() {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            setVisibilityToProgress(true);
+            showProgressBar(true);
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-            // Initialize a notification listener and add it to the Kaa client.
+//             Initialize a notification listener and add it to the Kaa client.
             initNotificationListener();
 
-            // Initialize a topicList listener and add it to the Kaa client.
+//             Initialize a topicList listener and add it to the Kaa client.
             initTopicListener();
 
-            manager = new KaaManager(MainActivity.this);
             manager.start(notificationListener, topicListener);
 
             List<TopicPojo> buff = TopicHelper.sync(TopicStorage.get().getTopics(), manager.getTopics());
@@ -143,7 +143,7 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            setVisibilityToProgress(false);
+            showProgressBar(false);
             showTopicsFragment();
         }
     };
@@ -227,8 +227,8 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
                 NotificationConstants.TOPIC_FRAGMENT_TAG).commit();
     }
 
-    private void setVisibilityToProgress(boolean visibility) {
-        if(visibility) {
+    private void showProgressBar(boolean show) {
+        if (show) {
             progressBar.setVisibility(View.VISIBLE);
             container.setVisibility(View.GONE);
         } else {

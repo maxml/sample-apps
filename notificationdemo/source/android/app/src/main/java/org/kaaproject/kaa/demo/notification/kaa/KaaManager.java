@@ -111,7 +111,7 @@ public class KaaManager {
      * Stop the Kaa client. Release all network connections and application
      * resources. Shut down all the Kaa client tasks.
      */
-    public void onTerminate() {
+    public void onStop() {
         if (mClient != null)
             mClient.stop();
     }
