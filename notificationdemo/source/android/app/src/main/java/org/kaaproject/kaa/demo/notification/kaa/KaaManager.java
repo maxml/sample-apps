@@ -41,6 +41,7 @@ public class KaaManager {
 
     private KaaClient mClient;
     private Activity activity;
+    private boolean mKaaStarted;
 
     public KaaManager(Activity activity) {
         this.activity = activity;
@@ -57,6 +58,7 @@ public class KaaManager {
         mClient.addTopicListListener(topicListListener);
 
         mClient.start();
+        mKaaStarted = true;
     }
 
     public List<Topic> getTopics() {
@@ -114,6 +116,12 @@ public class KaaManager {
     public void onStop() {
         if (mClient != null)
             mClient.stop();
+
+        mKaaStarted = false;
+    }
+
+    public boolean isKaaStarted() {
+        return mKaaStarted;
     }
 
 }
