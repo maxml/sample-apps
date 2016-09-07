@@ -92,11 +92,6 @@ public class MainActivity extends FragmentActivity implements TopicFragment.OnTo
     protected void onStop() {
         super.onStop();
         manager.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
         kaaTask.cancel(true);
     }
 
