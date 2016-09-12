@@ -20,7 +20,6 @@ package org.kaaproject.kaa.demo.notification.fragment;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +30,6 @@ import android.widget.TextView;
 
 import org.kaaproject.kaa.demo.notification.R;
 import org.kaaproject.kaa.schema.sample.notification.AlertType;
-import org.kaaproject.kaa.schema.sample.notification.SecurityAlert;
 
 /**
  * Extends {@link DialogFragment} and show new notification, that sent from server.
@@ -43,9 +41,6 @@ public class NotificationDialogFragment extends DialogFragment {
     private String topicName;
     private String notificationMessage;
     private AlertType notificationType;
-
-    public NotificationDialogFragment() {
-    }
 
     public static NotificationDialogFragment newInstance(String topicName, String notificationMessage, String notificationType) {
         NotificationDialogFragment frag = new NotificationDialogFragment();
@@ -63,7 +58,7 @@ public class NotificationDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         // Get field from view

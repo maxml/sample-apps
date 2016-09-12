@@ -28,4 +28,5 @@
     <string name="no_text">No text</string>
     <string name="no_notifications">No notifications on this serverTopic.</string>
     <string name="no_topics">No topics now.</string>
+    <string name="ok">OK</string>
 </resources>

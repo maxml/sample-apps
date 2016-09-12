@@ -25,13 +25,11 @@ import com.google.gson.reflect.TypeToken;
 
 import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
 import org.kaaproject.kaa.demo.notification.util.NotificationConstants;
-import org.kaaproject.kaa.demo.notification.util.TopicHelper;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -61,7 +59,7 @@ public class TopicStorage {
         return instance;
     }
 
-    public TopicStorage subsccribe(long topicId) {
+    public TopicStorage subscribe(long topicId) {
         for (TopicPojo t : topics) {
             if (t.getTopicId() == topicId) {
                 t.setSelected(true);
@@ -70,7 +68,7 @@ public class TopicStorage {
         return this;
     }
 
-    public TopicStorage unsubsccribe(long topicId) {
+    public TopicStorage unsubscribe(long topicId) {
         for (TopicPojo t : topics) {
             if (t.getTopicId() == topicId) {
                 t.setSelected(false);
@@ -83,9 +81,6 @@ public class TopicStorage {
         String buffStr = gson.toJson(topics);
         PreferenceManager.getDefaultSharedPreferences(context).edit().putString(NotificationConstants.PREFERENCES_TOPICS, buffStr).apply();
 
-        // FOR TEST
-        // Toast.makeText(context, buff, Toast.LENGTH_SHORT).show();
-
         return this;
     }
 
@@ -95,9 +90,6 @@ public class TopicStorage {
 
         String json = PreferenceManager.getDefaultSharedPreferences(context).getString(NotificationConstants.PREFERENCES_TOPICS, "");
         topics = gson.fromJson(json, typeOfHashMap);
-
-        // FOR TEST
-        // Toast.makeText(context, topics.toString(), Toast.LENGTH_SHORT).show();
 
         return this;
     }

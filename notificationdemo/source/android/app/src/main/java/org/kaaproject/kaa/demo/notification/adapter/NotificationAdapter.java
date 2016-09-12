@@ -16,13 +16,12 @@
 
 package org.kaaproject.kaa.demo.notification.adapter;
 
-import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.kaaproject.kaa.demo.notification.R;
@@ -38,22 +37,18 @@ import java.util.List;
  */
 public class NotificationAdapter extends ArrayAdapter<SecurityAlert> {
 
-    private Context context;
-
     public NotificationAdapter(Context context, List<SecurityAlert> notifications) {
         super(context, R.layout.item_notification, notifications);
-
-        this.context = context;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         ViewHolder viewHolder;
         SecurityAlert notification = getItem(position);
 
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.item_notification, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_notification, parent, false);
 
             viewHolder = new ViewHolder();
             viewHolder.message = (TextView) convertView.findViewById(R.id.notification_message);

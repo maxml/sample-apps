@@ -16,10 +16,8 @@
 
 package org.kaaproject.kaa.demo.notification.adapter;
 
-import java.util.List;
-
-import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +29,8 @@ import android.widget.TextView;
 import org.kaaproject.kaa.demo.notification.R;
 import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
 
+import java.util.List;
+
 
 /**
  * The implementation of the {@link ArrayAdapter} class.
@@ -39,24 +39,21 @@ import org.kaaproject.kaa.demo.notification.entity.TopicPojo;
  */
 public class TopicAdapter extends ArrayAdapter<TopicPojo> {
 
-    private Context context;
     private OnSubscribeCallback callback;
 
     public TopicAdapter(Context context, List<TopicPojo> topics, OnSubscribeCallback callback) {
         super(context, R.layout.item_topic, topics);
-
-        this.context = context;
         this.callback = callback;
     }
 
+    @NonNull
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
         final ViewHolder viewHolder;
         TopicPojo model = getItem(position);
 
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.item_topic, null);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_topic, null);
 
             viewHolder = new ViewHolder();
             viewHolder.topic = (TextView) convertView.findViewById(R.id.label);
@@ -70,10 +67,9 @@ public class TopicAdapter extends ArrayAdapter<TopicPojo> {
 
         viewHolder.topic.setText(model.getTopicName());
         viewHolder.notificationCount.setText(model.getNotificationsCount() != 0 ? "" + model.getNotificationsCount() : "");
-        viewHolder.checkbox.setChecked(model.isMandatoryTopic() ? true : model.isSelected());
+        viewHolder.checkbox.setChecked(model.isMandatoryTopic() || model.isSelected());
 
         viewHolder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 TopicPojo element = getItem(position);
@@ -88,7 +84,6 @@ public class TopicAdapter extends ArrayAdapter<TopicPojo> {
 
                 viewHolder.notificationCount.setText(element.getNotificationsCount() != 0 ? "" + element.getNotificationsCount() : "");
             }
-
         });
 
         if (model.isMandatoryTopic()) {
